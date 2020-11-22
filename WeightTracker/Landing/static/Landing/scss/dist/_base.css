@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+@media screen and (max-width: 75em) {
+  html {
+    font-size: 50%;
+  }
+}
+@media screen and (max-width: 56.25em) {
+  html {
+    font-size: 45%;
+  }
+}
+@media screen and (max-width: 43.75em) {
+  html {
+    font-size: 40%;
+  }
+}
+
+body {
+  font-family: "Roboto", "sans-serif";
+  color: #eee;
+  background-color: #f7f7f7;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 100vh min-content 40rem 20rem 20rem;
+  grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+}
+@media screen and (max-width: 56.25em) {
+  body {
+    grid-template-rows: max-content min-content 40rem 20rem 20rem;
+  }
+}

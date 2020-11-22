@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'Landing/css/main.css' %}" type="text/css">
+
+     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+     <script src="{% static 'Landing/js/main.js' %}"></script>
+     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+     
+  
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+    <title>Tracky</title>
+</head>
+
+<body class="container">
+  
+        <header class="header">
+            {% if user.is_authenticated %}
+            <div class="logreg">
+                <a class="btn register" href="{% url 'logout' %}">Log Out</a>
+            </div>
+            {% else %}
+            <div class="logreg">
+                <a class="btn login" href="{% url 'login' %}">Sign In</a>
+                <a class="btn register" href="{% url 'register' %}">Sign Up</a>
+            </div>
+            {% endif %}
+
+            <div class="welcome">
+
+                <h1 class="welcome__text">
+                    <span class="welcome__text--main">Welcome To</span>
+                    <span class="welcome__text--alt">Tracky</span>
+                </h1>
+
+                <a href="#data" class="btn-white">Get Started</a>
+                
+
+
+            </div>
+        </header>
+
+        <section class="summary" id="summary">
+            <h2 class="header-2">Built to motivate</h2>
+
+            <div class="summary__text">A simple app that helps you monitor your weight. It can provide useful information about your diet's success, it can also calculate your BMI, based on your Height and Weight. Using the app is 100% free for instructors and any other individuals as well. To get started, please fill out our form below. Good Luck on your journey!</div>
+
+        </section>
+
+        <section class="data" id = "data">
+            <div class="form__container">
+
+                <h2 class="header-form">Fill in your data!</h2>
+                {%block wform%}
+                <form method="POST" id="form" class="form">
+                    {% csrf_token %} 
+                    {% for field in form %}
+                    <p class="form-group">
+                        
+                        {{ field }}
+                        {{ field.help_text }}
+                    </p>
+                {% endfor %}
+                    <div class="form__group">
+                        {%if user.is_authenticated%}
+                        <input type="submit" class="submit" value="Submit Your Data">
+                        {%else%}
+                        <a href="{% url 'login' %}" class="submit">Submit Your Data</a>
+                        {%endif%}
+                        
+                    </div>
+                </form>
+
+                {%endblock wform%}
+                
+                
+            </div>
+        </section>
+
+        {% if user.is_authenticated %}
+        <section class="graph">
+            <canvas id="myChart" class="myChart"></canvas>
+        </section>
+
+        <section class="bmi">
+            <h3 class="bmi__index">Your BMI index: <span id="data-index"></span></h3>
+            <h3 class="bmi__status">Your BMI status: <span id="data-status"></span></h3>
+        </section>
+        {% else %}
+        <section class="graph">
+            <canvas id="myChart" class="myChart"></canvas>
+        </section>
+        {% endif %}
+
+        {% block javascript %}
+        <script>
+            $(document).ready(function(){
+
+                var endpont = '/api/data';
+                
+                $.ajax({
+                       method: 'GET',
+                       url: endpont,
+
+                       success: function(data){
+                           console.log(data.bmi);
+
+                           document.getElementById("data-index").innerHTML = data.bmi.toFixed(2);
+                           document.getElementById("data-status").innerHTML = data.status;
+
+                       }
+
+                   })
+
+
+                
+
+    console.log("Ready!");
+
+    const form = document.getElementById("form");
+    form.addEventListener("submit", submitHandler);
+
+    function submitHandler(e){
+        var endpont = '/api/data';
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "landing-home" %}',
+            data: $('#form').serialize(),
+            dataType: 'json',
+            
+            success: function(data){
+                if(data.msg == 'Success'){
+                    alert("Form is submitted!");
+                    $.ajax({
+                        method: 'GET',
+                        url: endpont,
+        success: function(data){
+            console.log(data);
+
+
+            var endpont = '/api/data';
+                
+                $.ajax({
+                       method: 'GET',
+                       url: endpont,
+
+                       success: function(data){
+                           console.log(data.bmi);
+
+                           document.getElementById("data-index").innerHTML = data.bmi.toFixed(2);
+                           document.getElementById("data-status").innerHTML = data.status;
+
+                       }
+
+                   })
+
+
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: data.date,
+        datasets: [{
+            label: 'Your Weight',
+            data: data.weight,
+            backgroundColor: [
+                'rgba(255, 251, 250, 0.2)'
+            ],
+            borderColor: [
+                'rgba(0, 196, 154, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+            
+        },
+        error: function(error_data){
+            console.log("Error");
+            console.log(error_data);
+        }
+    })
+                }
+            }
+
+        })
+    }
+
+    
+
+})
+
+    $(document).ready(function(){
+        var endpont = '/api/data';
+        $.ajax({
+                        method: 'GET',
+                        url: endpont,
+        success: function(data){
+            console.log(data);
+            var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: data.date,
+        datasets: [{
+            label: 'Your Weight',
+            data: data.weight,
+            backgroundColor: [
+                'rgba(255, 251, 250, 0.2)'
+            ],
+            borderColor: [
+                'rgba(0, 196, 154, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+            
+        },
+        error: function(error_data){
+            console.log("Error");
+            console.log(error_data);
+        }
+    })
+    })
+
+        </script>
+
+        {% endblock javascript %}
+
+
+
+        
+        </section>
+
+
+
+       
+
+
+
+       
+</body>
+
+
+
+</html>
+
+

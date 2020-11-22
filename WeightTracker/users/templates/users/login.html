@@ -1,0 +1,77 @@
+{%load static%}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+         <link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css">
+    
+        
+         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+      
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    
+        <title>Tracky || Login</title>
+    </head>
+</head>
+<body>
+    <div class="sign-in">
+       
+        {%block content%}
+        <form class="form" method="POST">
+            {% csrf_token %} 
+            <fieldset class="form-group text-center text-uppercase">
+                <h1 class="sign-in__header">Sign up</h1>
+                {% for field in form %}
+                    <p>
+                        
+                        {{ field }}
+                        {{ field.help_text }}
+                    </p>
+                {% endfor %}
+            </fieldset>
+            <div class="form-group">
+                <button class="submit" type="submit">Sign in</button>
+            </div>
+            
+
+            {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+<div class="text-cont">
+    <div class="account">
+        Doesn't have an account? <a href="{% url 'register' %}">Get Started</a>
+    </div>
+
+    <div class="forgot">
+        <a href="{% url 'password_reset' %}">Forgot your password?</a>
+    </div>
+</div>
+            </div>
+            
+        </form>
+            
+            </div>
+        {%endblock content%}
+    
+    
+</body>
+</html>

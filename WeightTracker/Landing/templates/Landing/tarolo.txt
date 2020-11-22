@@ -1,0 +1,21 @@
+<form action="" class="form">
+                    <div class="form__group">
+                        <input type="text" class="input" name="Weight" placeholder="Your Weight">
+                        
+                    </div>
+
+                    <div class="form__group">
+                        <input type="text" class="input" name="Height" placeholder="Your Height">
+                        
+                    </div>
+
+                    <div class="form__group">
+                        <input type="text" class="input" name="Goal" placeholder="Your Goal">
+                        
+                    </div>
+
+                    <div class="form__group">
+                        <input type="submit" class="submit" value="Submit Your Data">
+                        
+                    </div>
+                </form>

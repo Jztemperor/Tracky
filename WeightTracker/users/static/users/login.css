@@ -1,0 +1,274 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; 
+
+    
+}
+
+
+
+
+
+
+body {
+    font-family: 'Roboto','sans-serif';
+    
+
+ }
+
+.sign-in{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+
+}
+
+
+@media screen and (max-width: 75em){
+    .sign-in__form{
+        width: 32%;
+    }
+
+
+}
+
+@media screen and (max-width: 56.25em){
+    .sign-in__form{
+        width: 35%;
+    }
+
+
+}
+
+@media screen and (max-width: 48.75em){
+    .sign-in__form{
+        width: 42%;
+        font-size: 48%;
+    }
+
+
+}
+
+@media screen and (max-width: 40em){
+    .sign-in__form{
+        width: 45%;
+      
+    }
+
+
+}
+
+@media screen and (max-width: 36.25em){
+    .sign-in__form{
+        width: 55%;
+        font-size: 45%;
+      
+    }
+
+
+}
+
+
+@media screen and (max-width: 31.875em){
+    .sign-in__form{
+        width: 62%;
+        font-size: 38%;
+      
+    }
+
+
+}
+
+@media screen and (max-width: 29.375em){
+    .sign-in__form{
+        width: 70%;
+  
+      
+    }
+
+
+}
+
+@media screen and (max-width: 25em){
+    .sign-in__form{
+        width: 80%;
+  
+      
+    }
+
+
+}
+
+@media screen and (max-width: 22.5em){
+    .sign-in__form{
+        width: 85%;
+  
+      
+    }
+
+
+
+}
+
+
+
+@media screen and (max-width: 20em){
+    .sign-in__form{
+        width: 90%;
+  
+      
+    }
+
+
+}
+
+form{
+    width: 25%;
+}
+
+
+
+.sign-in__header{
+    text-transform: uppercase;
+    color: #2b9348;
+    font-size: 3.0rem;
+    margin-bottom: 3rem;
+    
+}
+
+.sign-in__form--group{
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.input{
+line-height: 1.2;
+font-size: 1.4rem;
+display: block;
+width: 100%;
+background: transparent;
+height: 55px;
+padding: 0 25px 0 27px;
+border: none;
+background-color: #eee;
+
+
+
+}
+
+
+
+.input:focus{
+    outline: none;
+    border-bottom: 3px solid #7ed56f;
+
+}
+
+
+
+.check:checked + .check__label .checkbox::after{
+    opacity: 1;
+}
+
+
+.fl{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    
+}
+
+.checkbox__label{
+    color: #777777;
+    font-size: 1.3rem;
+    padding-left: 2rem;
+    cursor: pointer;
+}
+
+.check__group{
+    width: 45%;
+    position: relative;
+
+}
+
+
+.check{
+    border: 2px solid #7ed56f;
+    height: 2rem;
+    width: 2rem;
+    display: inline-block;
+    position: absolute;
+    background-color: transparent;
+    left: -1px;
+    top: -2px;
+}
+
+.checkbox{
+    position: absolute;
+    left: -999999px;
+}
+
+
+.check::after{
+    content: "";
+    display: block;
+    content: '';
+    display: block;
+    width: 6px;
+    height: 12px;
+    margin-left: 5px;
+    border: solid #7ed56f;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.checkbox:checked + .checkbox__label .check::after{
+    opacity: 1;
+}
+
+.remember{
+    margin-left: 5px;
+}
+
+.forgot{
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: #7ed56f;
+}
+
+.submit{
+    display: inline-block;
+    height: 55px;
+    padding: 0 25px 0 27px;
+    width: 100%;
+    color: #FFF;
+    background-color: #7ed56f;
+    border: none;
+    font-size: 1.45rem;
+    text-transform: uppercase;
+
+    
+}
+
+.text-cont{
+    display: flex;
+    width: 100%;
+    align-content: space-between;
+    
+}
